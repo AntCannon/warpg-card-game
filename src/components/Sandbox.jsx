@@ -2,6 +2,7 @@ import './Sandbox.css'
 import { useState, useStack } from 'react'
 import { useForm } from 'react-hook-form'
 import { shuffleDeck, drawFromDeck } from '../utils/deckFetch.js'
+import CardsDrawnFromDeck from './cardsDrawnFromDeck.jsx'
 import Card from './Card.jsx'
 
 export default function Sandbox(){
@@ -67,11 +68,9 @@ export default function Sandbox(){
       </form>
       <div>
         <h3>Card(s) Drawn From Deck:</h3>
-        <div className="cards">
-          {cardsDrawnFromDeck.cards?.map(card => (
-            <Card card={card} key={card.code}/>
-          ))}
-        </div>
+          <CardsDrawnFromDeck
+            deck={deck}
+            cardsDrawnFromDeck={cardsDrawnFromDeck} />
         <h3>Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining || 52}</h3>
       </div>
     </>
