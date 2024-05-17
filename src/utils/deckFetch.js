@@ -18,7 +18,6 @@ export function getDeckInfo() {
     .then(response => response.json())
 }
 
-
 // shuffle deck
 // success message
 export function shuffleDeck() {
@@ -36,17 +35,23 @@ export function drawFromDeck(n=1) {
     .then(response => response.json())
 }
 
-// const deckLocal =
 
-/*
-function getCardsInPile(pile) {
-  fetch(`https://deckofcardsapi.com/api/deck/${deckID}/pile/${pile}/list/`)
+// create player1 pile
+
+export function createPile(pile, cardCodes) {
+
+  return fetch(`https://deckofcardsapi.com/api/deck/${deckID}/pile/${pile}/add/?cards=${cardCodes}`)
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(pile => console.log(pile))
     .catch(err => console.error(err))
 }
 
-// getCardsInPile()
+// get pile info
+export function getPileInfo(pileName) {
+  console.log(`getPileInfo`, deckID, pileName)
 
-
-*/
+  return fetch(`https://deckofcardsapi.com/api/deck/${deckID}/pile/${pileName}/list`)
+    .then(response => response.json())
+    .then(pile => console.log(pile))
+    .catch(err => console.error(err))
+}
