@@ -8,3 +8,12 @@ button {
   width: 200px;
   height: 50px;
 }
+
+.cards {
+  display: flex;
+  gap: 5px;
+}
+
+.card {
+  
+}
