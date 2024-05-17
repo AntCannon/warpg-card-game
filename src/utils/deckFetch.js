@@ -37,6 +37,18 @@ export function drawFromDeck(n=1) {
 
 
 // create player1 pile
+/*
+{
+  "success": true,
+  "deck_id": "3p40paa87x90",
+  "remaining": 12,
+  "piles": {
+      "CREATED PILE": {
+          "remaining": 2
+      }
+  }
+}
+*/
 
 export function createPile(pile, cardCodes) {
 

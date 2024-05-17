@@ -42,6 +42,7 @@ export default function Sandbox(){
     reset()
   }
   
+  // ---deck
   function drawCards(input) {
     const num = input.numCardsToDraw
   
@@ -65,6 +66,10 @@ export default function Sandbox(){
      .catch(err => console.error(err))
   })
 
+  // ---deck
+
+  // piles---
+
   function handleGetPileInfo(e) {
     const pileName = e.target.parentNode.id
     console.log(`pileName`,pileName)
@@ -72,16 +77,29 @@ export default function Sandbox(){
   }
 
   function handleDealCards() {
-    drawFromDeck(26)
+    drawFromDeck(52)
     .then(deck => {
-      const p1CardCodes = deck.cards.map(({code}, idx) => code).join(",")
-      console.log(p1CardCodes)
+      let p1CardCodes = []
+      let p2CardCodes = []
+      deck.cards
+        .forEach(({code}, idx) => 
+          (idx % 2 ? p1CardCodes : p2CardCodes)
+        .push(code))
+
+      p1CardCodes = p1CardCodes.join(",")
+      p2CardCodes = p2CardCodes.join(",")
+        
+      console.log('p1CardCodes', p1CardCodes)
+      console.log('p2CardCodes', p2CardCodes)
+
       createPile("p1PlatoonPile", p1CardCodes)
+      createPile("p2PlatoonPile", p2CardCodes)
       setPlayer1Pile(deck)
     })
     .catch(err => console.error(err))
-
   }
+
+  // ---piles
 
   return (
     <>
@@ -108,14 +126,19 @@ export default function Sandbox(){
             onClick={handleSetCardsFaceUp}>Flip Cards Up</button>
         <h3>Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining || deckInfo.remaining}</h3>
       </div>
-      <div className="Piles">
-        <div className="p1-platoon" id="p1PlatoonPile">
+      <div className="piles">
+        <div className="p1 platoon cards" id="p1PlatoonPile">
           <div className="p1-platoon soldiers">
 
           </div>
           <button onClick={handleGetPileInfo}>Get Platoon Info</button>
         </div>
+        <div className="p2 platoon cards" id="p2PlatoonPile">
+          <div className="p1-platoon soldiers">
 
+          </div>
+          <button onClick={handleGetPileInfo}>Get Platoon Info</button>
+        </div>
       </div>
       <button onClick={handleDealCards}>Deal Cards</button>
     </>
