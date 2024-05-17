@@ -9,4 +9,4 @@ npm install
 - react-router-dom
 
 ### API
-- deckapi.com
+- deckofcardsapi.com
