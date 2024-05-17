@@ -1,13 +1,13 @@
 import './Sandbox.css'
-import { useState, useStack } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { shuffleDeck, drawFromDeck } from '../utils/deckFetch.js'
+import { shuffleDeck, drawFromDeck, getDeckInfo } from '../utils/deckFetch.js'
 import CardsDrawnFromDeck from './cardsDrawnFromDeck.jsx'
 import Card from './Card.jsx'
 
 export default function Sandbox(){
   // config ---
-  const [ deck, setDeck ] = useState({})
+  const [ deckInfo, setDeckInfo ] = useState({})
   const [ cardsDrawnFromDeck, setCardsDrawnFromDeck] = useState({})
   const [ areCardsDrawnFromDeckFaceUp, setAreCardsDrawnFromDeckFaceUp ] = useState(false)
   const [ faceUpTrigger, setFaceUpTrigger ] = useState(false)
@@ -54,6 +54,12 @@ export default function Sandbox(){
     setFaceUpTrigger(!faceUpTrigger)
   }
 
+  useEffect(() => {
+    getDeckInfo()
+     .then(deckData => setDeckInfo(deckData))
+     .catch(err => console.error(err))
+  })
+
   return (
     <>
       <h2>Sandbox</h2>
@@ -71,14 +77,13 @@ export default function Sandbox(){
       </form>
       <div>
           <CardsDrawnFromDeck
-            deck={deck}
             cardsDrawnFromDeck={cardsDrawnFromDeck}
             areCardsDrawnFromDeckFaceUp={areCardsDrawnFromDeckFaceUp}
             faceUpTrigger={faceUpTrigger}
              />
           <button
             onClick={handleSetCardsFaceUp}>Flip Cards Up</button>
-        <h3>Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining || 52}</h3>
+        <h3>Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining || deckInfo.remaining}</h3>
       </div>
     </>
   )

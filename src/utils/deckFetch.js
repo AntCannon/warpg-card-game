@@ -14,7 +14,7 @@ const deckID = "e83u76fodhaz"
 
 //get deck info
 export function getDeckInfo() {
-  fetch(`https://deckofcardsapi.com/api/deck/${deckID}`)
+  return fetch(`https://deckofcardsapi.com/api/deck/${deckID}`)
     .then(response => response.json())
 }
 
@@ -22,7 +22,7 @@ export function getDeckInfo() {
 // shuffle deck
 // success message
 export function shuffleDeck() {
-  fetch(`https://deckofcardsapi.com/api/deck/${deckID}/shuffle/`)
+  return fetch(`https://deckofcardsapi.com/api/deck/${deckID}/shuffle/`)
     .then(response => response.json())
     .then(res => console.log(`deck shuffled`, res))
     .catch(err => console.error(err))
