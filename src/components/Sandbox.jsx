@@ -5,10 +5,7 @@ import { shuffleDeck, drawFromDeck } from '../utils/deckFetch.js'
 
 export default function Sandbox(){
   const [ deck, setDeck ] = useState({})
-  const [ cardsDrawnFromDeck, setCardsDrawnFromDeck] = useState({
-    remaining: "",
-    cards: []
-  })
+  const [ cardsDrawnFromDeck, setCardsDrawnFromDeck] = useState({})
 
   const cardDrawForm = useForm({
     defaultValues: {
@@ -18,14 +15,19 @@ export default function Sandbox(){
 
   const {
     register,
-    control,
+    watch,
     handleSubmit,
     formState,
-    reset
+    reset,
+    control,
   } = cardDrawForm;
+
+  const watchNumCardsToDraw = watch("numCardsToDraw")
+  console.log(watchNumCardsToDraw)
 
   function handleShuffleDeck() {
     shuffleDeck()
+    reset()
   }
 
   function onSubmit(input) {
@@ -62,19 +64,17 @@ export default function Sandbox(){
             {...register("numCardsToDraw")}
           />
         </label>
-        <button type="submit">Draw Card from Deck</button>
+        <button type="submit">Draw {watchNumCardsToDraw} Card(s) from Deck</button>
       </form>
       <div>
-        Card(s) Draw From Deck: 
+        Card(s) Drawn From Deck: 
         <div className="cards">
-          {cardsDrawnFromDeck.cards.map(({code, image}) => (
+          {cardsDrawnFromDeck.cards?.map(({code, image}) => (
             <img className="card" src={image} key={code} />
           ))}
         </div>
-        Cards Remaining in Deck: {cardsDrawnFromDeck.remaining}
+        Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining}
       </div>
-  
-      
     </>
   )
 }
