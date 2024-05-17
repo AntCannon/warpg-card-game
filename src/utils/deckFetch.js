@@ -21,22 +21,17 @@ export function shuffleDeck() {
     .catch(err => console.error(err))
 }
 
-/*
+
 // Draw from deck ------------
 export function drawFromDeck(n=1) {
   const pulledCards = fetch(`https://deckofcardsapi.com/api/deck/${deckID}/draw/?count=${n}`)
     .then(response => response.json())
     .then(deck => {
       console.log("cards",deck.cards)
-      return deck.cards
     })
     .catch(err => console.error(err))
-    
-    return pulledCards
 }
 
-const pulledCards = pullNCards(52)
-console.log("pulledCards",pulledCards)
 // const deckLocal =
 
 /*
