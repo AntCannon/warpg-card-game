@@ -26,6 +26,7 @@ export default function Sandbox(){
   console.log(watchNumCardsToDraw)
 
   function handleShuffleDeck() {
+    setCardsDrawnFromDeck({})
     shuffleDeck()
     reset()
   }
@@ -52,11 +53,10 @@ export default function Sandbox(){
 
   return (
     <>
-      Sandbox
+      <h2>Sandbox</h2>
       <button onClick={handleShuffleDeck}>Shuffle Deck</button>
       <form className="card-draw-form" onSubmit={handleSubmit(onSubmit)}>
-        <label>Number of Cards to Draw:
-          <br />
+        <label><h3 style={{ display: "inline-block" }}>Number of Cards to Draw:</h3>
           <input
             className="input-deck-draw-count"
             type="number"
@@ -64,16 +64,16 @@ export default function Sandbox(){
             {...register("numCardsToDraw")}
           />
         </label>
-        <button type="submit">Draw {watchNumCardsToDraw} Card(s) from Deck</button>
+        <button type="submit">Draw {watchNumCardsToDraw} Card{watchNumCardsToDraw > 1 ? "(s)" : ""} from Deck</button>
       </form>
       <div>
-        Card(s) Drawn From Deck: 
+        <h3>Card(s) Drawn From Deck:</h3>
         <div className="cards">
           {cardsDrawnFromDeck.cards?.map(({code, image}) => (
             <img className="card" src={image} key={code} />
           ))}
         </div>
-        Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining}
+        <h3>Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining || 52}</h3>
       </div>
     </>
   )
