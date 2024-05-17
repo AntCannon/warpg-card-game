@@ -12,6 +12,13 @@ export function createShuffledDeck() {
 // createShuffled()
 const deckID = "e83u76fodhaz"
 
+//get deck info
+export function getDeckInfo() {
+  fetch(`https://deckofcardsapi.com/api/deck/${deckID}`)
+    .then(response => response.json())
+}
+
+
 // shuffle deck
 // success message
 export function shuffleDeck() {
