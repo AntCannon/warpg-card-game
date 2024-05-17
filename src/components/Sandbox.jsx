@@ -6,8 +6,11 @@ import CardsDrawnFromDeck from './cardsDrawnFromDeck.jsx'
 import Card from './Card.jsx'
 
 export default function Sandbox(){
+  // config ---
   const [ deck, setDeck ] = useState({})
   const [ cardsDrawnFromDeck, setCardsDrawnFromDeck] = useState({})
+  const [ areCardsDrawnFromDeckFaceUp, setAreCardsDrawnFromDeckFaceUp ] = useState(false)
+  const [ faceUpTrigger, setFaceUpTrigger ] = useState(false)
 
   const cardDrawForm = useForm({
     defaultValues: {
@@ -23,16 +26,18 @@ export default function Sandbox(){
     reset,
     control,
   } = cardDrawForm;
-
-  const watchNumCardsToDraw = watch("numCardsToDraw")
+  
+  // end config ---
 
   function handleShuffleDeck() {
     setCardsDrawnFromDeck({})
     shuffleDeck()
     reset()
   }
+  
+  const watchNumCardsToDraw = watch("numCardsToDraw")
 
-  function onSubmit(input) {
+  function drawCards(input) {
     const num = input.numCardsToDraw
 
     drawFromDeck(num)
@@ -40,22 +45,20 @@ export default function Sandbox(){
       setCardsDrawnFromDeck(deck)
     })
     .catch(err => console.error(err))
+
+    setAreCardsDrawnFromDeckFaceUp(false)
   }
 
-  function handleDrawFromDeck() {
-    drawFromDeck()
-      .then(deck => {
-        console.log(deck)
-        setCardsDrawnFromDeck(deck)
-      })
-      .catch(err => console.error(err))
+  function handleSetCardsFaceUp() {
+    setAreCardsDrawnFromDeckFaceUp(true)
+    setFaceUpTrigger(!faceUpTrigger)
   }
 
   return (
     <>
       <h2>Sandbox</h2>
       <button onClick={handleShuffleDeck}>Shuffle Deck</button>
-      <form className="card-draw-form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="card-draw-form" onSubmit={handleSubmit(drawCards)}>
         <label><h3 style={{ display: "inline-block" }}>Number of Cards to Draw:</h3>
           <input
             className="input-deck-draw-count"
@@ -67,10 +70,14 @@ export default function Sandbox(){
         <button type="submit">Draw {watchNumCardsToDraw} Card{watchNumCardsToDraw > 1 ? "(s)" : ""} from Deck</button>
       </form>
       <div>
-        <h3>Card(s) Drawn From Deck:</h3>
           <CardsDrawnFromDeck
             deck={deck}
-            cardsDrawnFromDeck={cardsDrawnFromDeck} />
+            cardsDrawnFromDeck={cardsDrawnFromDeck}
+            areCardsDrawnFromDeckFaceUp={areCardsDrawnFromDeckFaceUp}
+            faceUpTrigger={faceUpTrigger}
+             />
+          <button
+            onClick={handleSetCardsFaceUp}>Flip Cards Up</button>
         <h3>Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining || 52}</h3>
       </div>
     </>
