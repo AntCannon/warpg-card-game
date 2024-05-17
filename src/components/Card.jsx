@@ -1,28 +1,42 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function Card ({ card }) {
+const backOfCard = "https://deckofcardsapi.com/static/img/back.png"
+
+export default function Card ({
+  card,
+  areCardsDrawnFromDeckFaceUp,
+  faceUpTrigger
+}) {
+
+  const [ localCard, setLocalCard ] = useState(card)
+
   const {
     code,
     image,
     value,
-    suit
-  } = card
-
-  const [ isFaceUp, setIsFaceUp ] = useState(false)
-
-  const backOfCard = "https://deckofcardsapi.com/static/img/back.png"
+    suit,
+    isFaceUp
+  } = localCard
 
   function handleCardFlip() {
-    setIsFaceUp(!isFaceUp)
+    localCard.isFaceUp = !localCard.isFaceUp
+    setLocalCard({...localCard})
   }
 
+  useEffect(() =>{
+    if (areCardsDrawnFromDeckFaceUp) {
+      localCard.isFaceUp = localCard.isFaceUp || true
+      setLocalCard({...localCard})
+    }
+  }, [faceUpTrigger])
+
   return(
-    <div className="card">
+    <div>
       <img
         className="card"
-        src={isFaceUp ? image : backOfCard}
+        src={localCard.isFaceUp ? image : backOfCard}
         onClick={handleCardFlip}
-        alt={isFaceUp ? `${value} of ${suit}` : "Back of card"} />
+        alt={localCard.isFaceUp ? `${value} of ${suit}` : "Back of card"} />
     </div>
   )
 }
