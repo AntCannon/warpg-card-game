@@ -1,6 +1,7 @@
 import './App.css'
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import Sandbox from './components/Sandbox.jsx'
 
 function App() {
 
@@ -12,8 +13,9 @@ function App() {
       </header>
       <main>
         Main
-        <Routes>
-        </Routes>
+        <Sandbox />
+        {/* <Routes>
+        </Routes> */}
       </main>
       <footer>Footer</footer>
     </>

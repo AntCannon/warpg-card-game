@@ -1,0 +1,27 @@
+main {
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+button {
+  width: 200px;
+  height: 50px;
+}
+
+.cards {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.card {
+  width: 200px;
+}
