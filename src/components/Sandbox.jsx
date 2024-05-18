@@ -82,45 +82,58 @@ export default function Sandbox(){
   }
 
   function handleDealCards() {
+    // debugger
     drawFromDeck(52)
-    .then(deck => {
-      let p1CardCodes = []
-      let p2CardCodes = []
-      deck.cards
+      .then(deck => {
+        let p1CardCodes = []
+        let p2CardCodes = []
+
+        deck.cards
         .forEach(({code}, idx) => 
           (idx % 2 ? p1CardCodes : p2CardCodes)
         .push(code))
+        
+        p1CardCodes = p1CardCodes.join(",")
+        p2CardCodes = p2CardCodes.join(",")
 
-      p1CardCodes = p1CardCodes.join(",")
-      p2CardCodes = p2CardCodes.join(",")
-      
-      createPile("p1PlatoonPile", p1CardCodes)
-      createPile("p2PlatoonPile", p2CardCodes)
-      
-      setTimeout(() => {
-        getP1PlatoonCards("p1PlatoonPile")
-        getP2PlatoonCards("p2PlatoonPile")
-      }, 1000)
-    })
-    .catch(err => console.error(err))
+        console.log(`p1CardCodes`, p1CardCodes)
+        console.log(`p2CardCodes`, p2CardCodes)
+        
+        // create a pile // original 
+        // createPile("p1PlatoonPile", p1CardCodes)
+        //   .then(() => createPile("p2PlatoonPile", p2CardCodes))
+
+        // @tim - wrap the fetches in a promise and wait for all to resolve before continuing
+        // possibly an issue with the the createpile requests happening closely. Added the getP1Platoon cards
+     
+        createPile("p1PlatoonPile", p1CardCodes)
+          .then(() => getP1PlatoonCards("p1PlatoonPile"))
+        
+        createPile("p2PlatoonPile", p2CardCodes)
+          .then(() => getP2PlatoonCards("p2PlatoonPile"))
+      })
+      .catch(err => console.error(err))
+  }
+
+  // get platoon cards---
+  function getP1PlatoonCards(pileName) {
+    getPileCards(pileName)
+      .then(data => {
+        console.log(`getP1Platoon`, data)
+        setP1Platoon(data.piles.p1PlatoonPile?.cards)
+      })
+      .catch(err => console.error(err))
   }
 
   function getP2PlatoonCards(pileName) {
     getPileCards(pileName)
       .then(data => {
-        console.log(`getPileCards`, data);
-        setP1Platoon(data.piles.p1PlatoonPile?.cards)
-      })
-      .catch(err => console.error(err))
-  }
-  function getP1PlatoonCards(pileName) {
-    getPileCards(pileName)
-      .then(data => {
-        console.log(`getPileCards`, data);
+        console.log(`getP2Platoon`, data)
         setP2Platoon(data.piles.p2PlatoonPile?.cards)
       })
       .catch(err => console.error(err))
   }
+  // ---get platoon cards
 
   // ---piles
 
@@ -161,7 +174,7 @@ export default function Sandbox(){
 
         <Pile
           player="p2"
-          pile={p1Platoon}
+          pile={p2Platoon}
           handleGetPileInfo={handleGetPileInfo}
         />
       </div>
