@@ -15,7 +15,7 @@ button {
   height: 50px;
 }
 
-.cards-drawn-from-deck {
+.cards-drawn-from-deck, .soldiers {
   width: 80%;
   display: flex;
   flex-wrap: wrap;

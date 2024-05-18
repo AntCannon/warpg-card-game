@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   shuffleDeck, drawFromDeck, getDeckInfo,
-  createPile, getPileInfo } from '../utils/deckFetch.js'
-import CardsDrawnFromDeck from './cardsDrawnFromDeck.jsx'
+  createPile, getPileCards, getPileInfo } from '../utils/deckFetch.js'
+import CardsDrawnFromDeck from './CardsDrawnFromDeck.jsx'
+import Pile from './Pile.jsx'
 import Card from './Card.jsx'
 
 export default function Sandbox(){
@@ -30,19 +31,24 @@ export default function Sandbox(){
   // ---card draw form
 
   // Pile---
-  const [ player1Pile, setPlayer1Pile ] = useState([])
+  const [ p1Platoon, setP1Platoon ] = useState([])
+  const [ p2Platoon, setP2Platoon ] = useState([])
 
   // ---Pile
   
   // end config ---
-  const watchNumCardsToDraw = watch("numCardsToDraw")
+  
+  
+  // ---deck
   function handleShuffleDeck() {
     setCardsDrawnFromDeck({})
     shuffleDeck()
     reset()
+    setP1Platoon([])
+    setP2Platoon([])
   }
   
-  // ---deck
+  const watchNumCardsToDraw = watch("numCardsToDraw")
   function drawCards(input) {
     const num = input.numCardsToDraw
   
@@ -64,7 +70,7 @@ export default function Sandbox(){
     getDeckInfo()
      .then(deckData => setDeckInfo(deckData))
      .catch(err => console.error(err))
-  })
+  }, [])
 
   // ---deck
 
@@ -72,7 +78,6 @@ export default function Sandbox(){
 
   function handleGetPileInfo(e) {
     const pileName = e.target.parentNode.id
-    console.log(`pileName`,pileName)
     getPileInfo(pileName)
   }
 
@@ -88,15 +93,33 @@ export default function Sandbox(){
 
       p1CardCodes = p1CardCodes.join(",")
       p2CardCodes = p2CardCodes.join(",")
-        
-      console.log('p1CardCodes', p1CardCodes)
-      console.log('p2CardCodes', p2CardCodes)
-
+      
       createPile("p1PlatoonPile", p1CardCodes)
       createPile("p2PlatoonPile", p2CardCodes)
-      setPlayer1Pile(deck)
+      
+      setTimeout(() => {
+        getP1PlatoonCards("p1PlatoonPile")
+        getP2PlatoonCards("p2PlatoonPile")
+      }, 1000)
     })
     .catch(err => console.error(err))
+  }
+
+  function getP2PlatoonCards(pileName) {
+    getPileCards(pileName)
+      .then(data => {
+        console.log(`getPileCards`, data);
+        setP1Platoon(data.piles.p1PlatoonPile?.cards)
+      })
+      .catch(err => console.error(err))
+  }
+  function getP1PlatoonCards(pileName) {
+    getPileCards(pileName)
+      .then(data => {
+        console.log(`getPileCards`, data);
+        setP2Platoon(data.piles.p2PlatoonPile?.cards)
+      })
+      .catch(err => console.error(err))
   }
 
   // ---piles
@@ -105,6 +128,7 @@ export default function Sandbox(){
     <>
       <h2>Sandbox</h2>
       <button onClick={handleShuffleDeck}>Shuffle Deck</button>
+      
       <form className="card-draw-form" onSubmit={handleSubmit(drawCards)}>
         <label><h3 style={{ display: "inline-block" }}>Number of Cards to Draw:</h3>
           <input
@@ -116,6 +140,7 @@ export default function Sandbox(){
         </label>
         <button type="submit">Draw {watchNumCardsToDraw} Card{watchNumCardsToDraw > 1 ? "(s)" : ""} from Deck</button>
       </form>
+      
       <div>
           <CardsDrawnFromDeck
             cardsDrawnFromDeck={cardsDrawnFromDeck}
@@ -126,20 +151,21 @@ export default function Sandbox(){
             onClick={handleSetCardsFaceUp}>Flip Cards Up</button>
         <h3>Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining || deckInfo.remaining}</h3>
       </div>
+      
       <div className="piles">
-        <div className="p1 platoon cards" id="p1PlatoonPile">
-          <div className="p1-platoon soldiers">
+        <Pile
+          player="p1"
+          pile={p1Platoon}
+          handleGetPileInfo={handleGetPileInfo}
+        />
 
-          </div>
-          <button onClick={handleGetPileInfo}>Get Platoon Info</button>
-        </div>
-        <div className="p2 platoon cards" id="p2PlatoonPile">
-          <div className="p1-platoon soldiers">
-
-          </div>
-          <button onClick={handleGetPileInfo}>Get Platoon Info</button>
-        </div>
+        <Pile
+          player="p2"
+          pile={p1Platoon}
+          handleGetPileInfo={handleGetPileInfo}
+        />
       </div>
+      
       <button onClick={handleDealCards}>Deal Cards</button>
     </>
   )

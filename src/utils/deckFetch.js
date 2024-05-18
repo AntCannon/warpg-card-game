@@ -60,10 +60,21 @@ export function createPile(pile, cardCodes) {
 
 // get pile info
 export function getPileInfo(pileName) {
-  console.log(`getPileInfo`, deckID, pileName)
 
   return fetch(`https://deckofcardsapi.com/api/deck/${deckID}/pile/${pileName}/list`)
     .then(response => response.json())
     .then(pile => console.log(pile))
     .catch(err => console.error(err))
+}
+// get pile cards
+export function getPileCards(pileName) {
+
+  console.log(deckID, pileName)
+  
+  return fetch(`https://deckofcardsapi.com/api/deck/${deckID}/pile/${pileName}/list`)
+    .then(response => response.json())
+
+  // return fetch(`https://deckofcardsapi.com/api/deck/e83u76fodhaz/pile/p1PlatoonPile/list/`)
+  // .then(response => response.json())
+    
 }
