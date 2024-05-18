@@ -7,8 +7,6 @@ export default function Play({
 
 }) {
 
-  console.log(`p1P`, p1Platoon)
-
   return (
     <>
     <h2>Play!</h2>

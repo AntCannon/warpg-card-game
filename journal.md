@@ -1,5 +1,5 @@
 ## Learning points
-when working with processes check your .thens and build a sequnce of operations to get the desired result.
+when working with processes check your .thens and build a sequence of operations to get the desired result.
 - two back to back requests to the same endpoint can result in error.
 - solution - think about your workflow. Can you put something in between?
 ```js
