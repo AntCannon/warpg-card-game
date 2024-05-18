@@ -30,11 +30,11 @@ export default function Sandbox(){
   } = cardDrawForm;
   // ---card draw form
 
-  // Pile---
+  // Piles---
   const [ p1Platoon, setP1Platoon ] = useState([])
   const [ p2Platoon, setP2Platoon ] = useState([])
 
-  // ---Pile
+  // ---Piles
   
   // end config ---
   
@@ -82,7 +82,6 @@ export default function Sandbox(){
   }
 
   function handleDealCards() {
-    // debugger
     drawFromDeck(52)
       .then(deck => {
         let p1CardCodes = []
@@ -95,16 +94,6 @@ export default function Sandbox(){
         
         p1CardCodes = p1CardCodes.join(",")
         p2CardCodes = p2CardCodes.join(",")
-
-        console.log(`p1CardCodes`, p1CardCodes)
-        console.log(`p2CardCodes`, p2CardCodes)
-        
-        // create a pile // original 
-        // createPile("p1PlatoonPile", p1CardCodes)
-        //   .then(() => createPile("p2PlatoonPile", p2CardCodes))
-
-        // @tim - wrap the fetches in a promise and wait for all to resolve before continuing
-        // possibly an issue with the the createpile requests happening closely. Added the getP1Platoon cards
      
         createPile("p1PlatoonPile", p1CardCodes)
           .then(() => getP1PlatoonCards("p1PlatoonPile"))
@@ -119,7 +108,6 @@ export default function Sandbox(){
   function getP1PlatoonCards(pileName) {
     getPileCards(pileName)
       .then(data => {
-        console.log(`getP1Platoon`, data)
         setP1Platoon(data.piles.p1PlatoonPile?.cards)
       })
       .catch(err => console.error(err))
@@ -128,7 +116,6 @@ export default function Sandbox(){
   function getP2PlatoonCards(pileName) {
     getPileCards(pileName)
       .then(data => {
-        console.log(`getP2Platoon`, data)
         setP2Platoon(data.piles.p2PlatoonPile?.cards)
       })
       .catch(err => console.error(err))
