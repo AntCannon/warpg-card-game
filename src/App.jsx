@@ -14,7 +14,6 @@ function App() {
       </header>
       <main>
         Main
-        <Play />
         <Sandbox />
         {/* <Routes>
         </Routes> */}

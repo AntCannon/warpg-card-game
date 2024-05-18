@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import {
   shuffleDeck, drawFromDeck, getDeckInfo,
   createPile, getPileCards, getPileInfo } from '../utils/deckFetch.js'
+  import Play from './Play.jsx'
 import CardsDrawnFromDeck from './CardsDrawnFromDeck.jsx'
 import Pile from './Pile.jsx'
 import Card from './Card.jsx'
@@ -98,8 +99,11 @@ export default function Sandbox(){
         createPile("p1PlatoonPile", p1CardCodes)
           .then(() => getP1PlatoonCards("p1PlatoonPile"))
         
-        createPile("p2PlatoonPile", p2CardCodes)
+        setTimeout(() => {
+          createPile("p2PlatoonPile", p2CardCodes)
           .then(() => getP2PlatoonCards("p2PlatoonPile"))
+        }, 500)
+        
       })
       .catch(err => console.error(err))
   }
@@ -127,6 +131,10 @@ export default function Sandbox(){
   return (
     <>
       <h2>Sandbox</h2>
+      <Play
+        p1Platoon={p1Platoon}
+        p2Platoon={p2Platoon}
+      />
       <button onClick={handleShuffleDeck}>Shuffle Deck</button>
       
       <form className="card-draw-form" onSubmit={handleSubmit(drawCards)}>
