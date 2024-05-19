@@ -5,7 +5,7 @@ import {
   drawFromDeck,
   createPile, getPileCards, getPileInfo } from '../utils/deckFetch.js'
 import {
-  shuffleDeck, fetchDeckInfo, fetchCardsFromDeck } from '../utils/deckFetch2.js'
+  shuffleDeck, fetchDeckInfo, fetchCardsFromDeck, fetchPileInfo } from '../utils/deckFetch2.js'
 import Play from './Play.jsx'
 import CardsDrawnFromDeck from './CardsDrawnFromDeck.jsx'
 import Pile from './Pile.jsx'
@@ -78,9 +78,10 @@ export default function Sandbox(){
 
   // piles---
 
-  function handleGetPileInfo(e) {
+  async function handleGetPileInfo(e) {
     const pileName = e.target.parentNode.id
-    getPileInfo(pileName)
+    const pileInfo = await fetchPileInfo(pileName)
+    console.log(`handle get pile info`, pileInfo)
   }
 
   function handleDealCards() {

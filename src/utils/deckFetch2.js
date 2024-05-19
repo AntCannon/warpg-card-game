@@ -65,5 +65,19 @@ export async function fetchCardsFromDeck(n = 1) {
   return drawnCards
 }
 
-
 // ---fetch card from deck
+
+// get pile info---
+export async function fetchPileInfo(pileName) {
+  const response = await fetch(`${BURL}/${deckID}/pile/${pileName}/list`)
+  
+  if (!response.ok) {
+    const message = `An error has occurred: ${response.status}`
+    throw new Error(message)
+  }
+
+  const result = response.json()
+  return result
+}
+
+// ---get pile info
