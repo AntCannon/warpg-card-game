@@ -2,10 +2,10 @@ import './Sandbox.css'
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import {
-  drawFromDeck, getDeckInfo,
+  drawFromDeck,
   createPile, getPileCards, getPileInfo } from '../utils/deckFetch.js'
 import {
-  shuffleDeck } from '../utils/deckFetch2.js'
+  shuffleDeck, fetchDeckInfo, fetchCardsFromDeck } from '../utils/deckFetch2.js'
 import Play from './Play.jsx'
 import CardsDrawnFromDeck from './CardsDrawnFromDeck.jsx'
 import Pile from './Pile.jsx'
@@ -43,6 +43,16 @@ export default function Sandbox(){
   
   
   // ---deck
+
+  useEffect(() => {
+    async function getDeckInfo() {
+      const actualDeckInfo = await fetchDeckInfo()
+      setDeckInfo(actualDeckInfo)
+    }
+    getDeckInfo()
+
+  }, [])
+
   function handleShuffleDeck() {
     setCardsDrawnFromDeck({})
     shuffleDeck()
@@ -52,15 +62,10 @@ export default function Sandbox(){
   }
   
   const watchNumCardsToDraw = watch("numCardsToDraw")
-  function drawCards(input) {
+  async function getDrawnCards(input) {
     const num = input.numCardsToDraw
-  
-    drawFromDeck(num)
-    .then(deck => {
-      setCardsDrawnFromDeck(deck)
-    })
-    .catch(err => console.error(err))
-  
+    const drawnCards = await fetchCardsFromDeck(num)
+    setCardsDrawnFromDeck(drawnCards)
     setAreCardsDrawnFromDeckFaceUp(false)
   }
   
@@ -68,12 +73,6 @@ export default function Sandbox(){
     setAreCardsDrawnFromDeckFaceUp(true)
     setFaceUpTrigger(!faceUpTrigger)
   }
-
-  useEffect(() => {
-    getDeckInfo()
-     .then(deckData => setDeckInfo(deckData))
-     .catch(err => console.error(err))
-  }, [])
 
   // ---deck
 
@@ -139,7 +138,7 @@ export default function Sandbox(){
       />
       <button onClick={handleShuffleDeck}>Shuffle Deck</button>
       
-      <form className="card-draw-form" onSubmit={handleSubmit(drawCards)}>
+      <form className="card-draw-form" onSubmit={handleSubmit(getDrawnCards)}>
         <label><h3 style={{ display: "inline-block" }}>Number of Cards to Draw:</h3>
           <input
             className="input-deck-draw-count"
