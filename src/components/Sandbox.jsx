@@ -6,7 +6,7 @@ import {
   createPile, getPileCards } from '../utils/deckFetch.js'
 
 import {
-  shuffleDeck, fetchDeckInfo, fetchCardsFromDeck, fetchPileInfo } from '../utils/deckFetch2.js'
+  shuffleDeck, fetchDeckInfo, fetchCardsFromDeck, fetchCreatePile, fetchPileInfo } from '../utils/deckFetch2.js'
 
 import { getDeckInfo, getDrawnCards } from '../utils/cardFunctions.js'
 
@@ -37,11 +37,17 @@ export default function Sandbox(){
   } = cardDrawForm;
   // ---card draw form
 
-  // Piles---
-  const [ p1Platoon, setP1Platoon ] = useState([])
-  const [ p2Platoon, setP2Platoon ] = useState([])
-
-  // ---Piles
+  // local piles---
+  const [ pPlatoon, setPPlatoon ] = useState([])
+  const [ pReserve, setPReserve ] = useState([])
+  const [ pBattle, setPBattle ] = useState([])
+  const [ pWar, setPWar ] = useState([])
+  
+  const [ ePlatoon, setEPlatoon ] = useState([])
+  const [ eReserve, setEReserve ] = useState([])
+  const [ eBattle, setEBattle ] = useState([])
+  const [ eWar, setEWar ] = useState([])
+  // --- local piles
   
   // end config ---
   
@@ -49,15 +55,16 @@ export default function Sandbox(){
   // ---deck
 
   useEffect(() => {
-    setDeckInfo(getDeckInfo())
+    getDeckInfo()
+      .then(deckInfo => setDeckInfo(deckInfo))
   }, [])
 
   function handleShuffleDeck() {
     setCardsDrawnFromDeck({})
     shuffleDeck()
     reset()
-    setP1Platoon([])
-    setP2Platoon([])
+    setPPlatoon([])
+    setEPlatoon([])
   }
   
   const watchNumCardsToDraw = watch("numCardsToDraw")
@@ -66,9 +73,7 @@ export default function Sandbox(){
     const drawnCards = await getDrawnCards(num)
     setCardsDrawnFromDeck(drawnCards)
     setAreCardsDrawnFromDeckFaceUp(false)
-
   }
-  
   
   function handleSetCardsFaceUp() {
     setAreCardsDrawnFromDeckFaceUp(true)
@@ -85,32 +90,27 @@ export default function Sandbox(){
     console.log(`handle get pile info`, pileInfo)
   }
 
-  function handleDealCards() {
+  async function handleDealCards() {
+    // draw 26 cards
+    const pPlatoonDraw = await fetchCardsFromDeck(26)
+    const pPlatoonCards = pPlatoonDraw.cards
+    // set pPlatoon
+    setPPlatoon(pPlatoonCards)
+    // get list of card codes
+    const pPlatoonCardCodes = pPlatoonDraw.cards.map(code => code)
+    // create remote pile of 26 cards
+    const pPlatoonResult = await fetchCreatePile("pPlatoon", pPlatoonCardCodes.join(","))
 
 
-    // drawFromDeck(52)
-      // .then(deck => {
-      //   let p1CardCodes = []
-      //   let p2CardCodes = []
-
-      //   deck.cards
-      //   .forEach(({code}, idx) => 
-      //     (idx % 2 ? p1CardCodes : p2CardCodes)
-      //   .push(code))
-        
-      //   p1CardCodes = p1CardCodes.join(",")
-      //   p2CardCodes = p2CardCodes.join(",")
-     
-      //   createPile("p1PlatoonPile", p1CardCodes)
-      //     .then(() => getP1PlatoonCards("p1PlatoonPile"))
-        
-      //   setTimeout(() => {
-      //     createPile("p2PlatoonPile", p2CardCodes)
-      //     .then(() => getP2PlatoonCards("p2PlatoonPile"))
-      //   }, 500)
-        
-      // })
-      // .catch(err => console.error(err))
+    // draw 26 cards
+    const ePlatoonDraw = await fetchCardsFromDeck(26)
+    const ePlatoonCards = ePlatoonDraw.cards
+    // set ePlatoon
+    setEPlatoon(ePlatoonCards)
+    // get list of cards
+    const ePlatoonCardCodes = ePlatoonDraw.cards.map(code => code)
+    // create remote pile
+    const ePlatoonResult = await fetchCreatePile("pPlatoon", pPlatoonCardCodes.join(","))
   }
 
   // get platoon cards---
@@ -137,8 +137,8 @@ export default function Sandbox(){
     <>
       <h2>Sandbox</h2>
       <Play
-        p1Platoon={p1Platoon}
-        p2Platoon={p2Platoon}
+        p1Platoon={pPlatoon}
+        p2Platoon={ePlatoon}
       />
       <button onClick={handleShuffleDeck}>Shuffle Deck</button>
       
@@ -168,13 +168,13 @@ export default function Sandbox(){
       <div className="piles">
         <Pile
           player="p1"
-          pile={p1Platoon}
+          pile={pPlatoon}
           handleGetPileInfo={handleGetPileInfo}
         />
 
         <Pile
           player="p2"
-          pile={p2Platoon}
+          pile={ePlatoon}
           handleGetPileInfo={handleGetPileInfo}
         />
       </div>

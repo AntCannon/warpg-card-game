@@ -13,6 +13,13 @@ export async function getDeckInfo() {
 // get drawn cards---
 export async function getDrawnCards(num) {
   const drawnCards = await fetchCardsFromDeck(num)
-  return (drawnCards)
+  return drawnCards
 }
-// ---get drawn info
+// ---get drawn cards
+
+// add cards to local pile---
+export function addCardsToLocalPile(localPile, cards) {
+
+}
+
+// ---add cards to local pile
