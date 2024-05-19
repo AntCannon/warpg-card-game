@@ -3,9 +3,13 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   drawFromDeck,
-  createPile, getPileCards, getPileInfo } from '../utils/deckFetch.js'
+  createPile, getPileCards } from '../utils/deckFetch.js'
+
 import {
   shuffleDeck, fetchDeckInfo, fetchCardsFromDeck, fetchPileInfo } from '../utils/deckFetch2.js'
+
+import { getDeckInfo, getDrawnCards } from '../utils/cardFunctions.js'
+
 import Play from './Play.jsx'
 import CardsDrawnFromDeck from './CardsDrawnFromDeck.jsx'
 import Pile from './Pile.jsx'
@@ -45,12 +49,7 @@ export default function Sandbox(){
   // ---deck
 
   useEffect(() => {
-    async function getDeckInfo() {
-      const actualDeckInfo = await fetchDeckInfo()
-      setDeckInfo(actualDeckInfo)
-    }
-    getDeckInfo()
-
+    setDeckInfo(getDeckInfo())
   }, [])
 
   function handleShuffleDeck() {
@@ -62,12 +61,14 @@ export default function Sandbox(){
   }
   
   const watchNumCardsToDraw = watch("numCardsToDraw")
-  async function getDrawnCards(input) {
+  async function handleDrawCardsFromDeck(input) {
     const num = input.numCardsToDraw
-    const drawnCards = await fetchCardsFromDeck(num)
+    const drawnCards = await getDrawnCards(num)
     setCardsDrawnFromDeck(drawnCards)
     setAreCardsDrawnFromDeckFaceUp(false)
+
   }
+  
   
   function handleSetCardsFaceUp() {
     setAreCardsDrawnFromDeckFaceUp(true)
@@ -85,29 +86,31 @@ export default function Sandbox(){
   }
 
   function handleDealCards() {
-    drawFromDeck(52)
-      .then(deck => {
-        let p1CardCodes = []
-        let p2CardCodes = []
 
-        deck.cards
-        .forEach(({code}, idx) => 
-          (idx % 2 ? p1CardCodes : p2CardCodes)
-        .push(code))
+
+    // drawFromDeck(52)
+      // .then(deck => {
+      //   let p1CardCodes = []
+      //   let p2CardCodes = []
+
+      //   deck.cards
+      //   .forEach(({code}, idx) => 
+      //     (idx % 2 ? p1CardCodes : p2CardCodes)
+      //   .push(code))
         
-        p1CardCodes = p1CardCodes.join(",")
-        p2CardCodes = p2CardCodes.join(",")
+      //   p1CardCodes = p1CardCodes.join(",")
+      //   p2CardCodes = p2CardCodes.join(",")
      
-        createPile("p1PlatoonPile", p1CardCodes)
-          .then(() => getP1PlatoonCards("p1PlatoonPile"))
+      //   createPile("p1PlatoonPile", p1CardCodes)
+      //     .then(() => getP1PlatoonCards("p1PlatoonPile"))
         
-        setTimeout(() => {
-          createPile("p2PlatoonPile", p2CardCodes)
-          .then(() => getP2PlatoonCards("p2PlatoonPile"))
-        }, 500)
+      //   setTimeout(() => {
+      //     createPile("p2PlatoonPile", p2CardCodes)
+      //     .then(() => getP2PlatoonCards("p2PlatoonPile"))
+      //   }, 500)
         
-      })
-      .catch(err => console.error(err))
+      // })
+      // .catch(err => console.error(err))
   }
 
   // get platoon cards---
@@ -139,7 +142,7 @@ export default function Sandbox(){
       />
       <button onClick={handleShuffleDeck}>Shuffle Deck</button>
       
-      <form className="card-draw-form" onSubmit={handleSubmit(getDrawnCards)}>
+      <form className="card-draw-form" onSubmit={handleSubmit(handleDrawCardsFromDeck)}>
         <label><h3 style={{ display: "inline-block" }}>Number of Cards to Draw:</h3>
           <input
             className="input-deck-draw-count"

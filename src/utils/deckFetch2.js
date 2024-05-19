@@ -61,13 +61,28 @@ export async function fetchCardsFromDeck(n = 1) {
   }
 
   const drawnCards =  response.json()
-  console.log(`drawn Cards async`, drawnCards)
   return drawnCards
 }
 
 // ---fetch card from deck
 
-// get pile info---
+// fetch create pile---
+export async function fetchCreatePile() {
+  const response = await etch(`${BURL}/${deckID}/pile/${pile}/add/?cards=${cardCodes}`)
+
+  if (!response.ok) {
+    const message = `An error has occurred: ${response.status}`
+    throw new Error(message)
+  }
+
+  const result = response.json()
+  console.log(`pile created`)
+  console.log(result)
+}
+
+// ---fetch create pile
+
+// fetch pile info---
 export async function fetchPileInfo(pileName) {
   const response = await fetch(`${BURL}/${deckID}/pile/${pileName}/list`)
   
@@ -76,8 +91,22 @@ export async function fetchPileInfo(pileName) {
     throw new Error(message)
   }
 
-  const result = response.json()
-  return result
+  const pileInfo = response.json()
+  return pileInfo
 }
 
-// ---get pile info
+// ---fetch pile info
+
+// fetch pile cards---
+export async function fetchPileCards(pileName) {
+  const response = await fetch(`${BURL}/${deckID}/pile/${pileName}/list`)
+  
+  if (!response.ok) {
+    const message = `An error has occurred: ${response.status}`
+    throw new Error(message)
+  }
+
+  const pileInfo = response.json()
+  return pileInfo.cards
+}
+// ---fetch pile cards
