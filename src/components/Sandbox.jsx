@@ -2,9 +2,11 @@ import './Sandbox.css'
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import {
-  shuffleDeck, drawFromDeck, getDeckInfo,
+  drawFromDeck, getDeckInfo,
   createPile, getPileCards, getPileInfo } from '../utils/deckFetch.js'
-  import Play from './Play.jsx'
+import {
+  shuffleDeck } from '../utils/deckFetch2.js'
+import Play from './Play.jsx'
 import CardsDrawnFromDeck from './CardsDrawnFromDeck.jsx'
 import Pile from './Pile.jsx'
 import Card from './Card.jsx'
