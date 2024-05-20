@@ -19,7 +19,6 @@ export async function getDrawnCards(num) {
 
 // add cards to local pile---
 export function addCardsToLocalPile(localPile, cards) {
-
 }
 
 // ---add cards to local pile
