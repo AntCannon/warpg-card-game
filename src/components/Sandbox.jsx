@@ -1,9 +1,6 @@
 import './Sandbox.css'
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import {
-  drawFromDeck,
-  createPile, getPileCards } from '../utils/deckFetch.js'
 
 import {
   shuffleDeck, fetchDeckInfo, fetchCardsFromDeck, fetchCreatePile, fetchPileInfo } from '../utils/deckFetch2.js'
@@ -97,9 +94,10 @@ export default function Sandbox(){
     // set pPlatoon
     setPPlatoon(pPlatoonCards)
     // get list of card codes
-    const pPlatoonCardCodes = pPlatoonDraw.cards.map(code => code)
+    const pPlatoonCardCodes = pPlatoonDraw.cards.map(({code}) => code)
+    console.log(pPlatoonCardCodes)
     // create remote pile of 26 cards
-    const pPlatoonResult = await fetchCreatePile("pPlatoon", pPlatoonCardCodes.join(","))
+    const pPlatoonResult = await fetchCreatePile("pPlatoonPile", pPlatoonCardCodes.join(","))
 
 
     // draw 26 cards
@@ -108,28 +106,12 @@ export default function Sandbox(){
     // set ePlatoon
     setEPlatoon(ePlatoonCards)
     // get list of cards
-    const ePlatoonCardCodes = ePlatoonDraw.cards.map(code => code)
+    const ePlatoonCardCodes = ePlatoonDraw.cards.map(({code}) => code)
+    console.log(ePlatoonCardCodes)
+
     // create remote pile
-    const ePlatoonResult = await fetchCreatePile("pPlatoon", pPlatoonCardCodes.join(","))
+    const ePlatoonResult = await fetchCreatePile("ePlatoonPile", ePlatoonCardCodes.join(","))
   }
-
-  // get platoon cards---
-  function getP1PlatoonCards(pileName) {
-    getPileCards(pileName)
-      .then(data => {
-        setP1Platoon(data.piles.p1PlatoonPile?.cards)
-      })
-      .catch(err => console.error(err))
-  }
-
-  function getP2PlatoonCards(pileName) {
-    getPileCards(pileName)
-      .then(data => {
-        setP2Platoon(data.piles.p2PlatoonPile?.cards)
-      })
-      .catch(err => console.error(err))
-  }
-  // ---get platoon cards
 
   // ---piles
 
@@ -167,13 +149,13 @@ export default function Sandbox(){
       
       <div className="piles">
         <Pile
-          player="p1"
+          player="p"
           pile={pPlatoon}
           handleGetPileInfo={handleGetPileInfo}
         />
 
         <Pile
-          player="p2"
+          player="e"
           pile={ePlatoon}
           handleGetPileInfo={handleGetPileInfo}
         />
