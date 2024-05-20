@@ -50,15 +50,11 @@ export default function Sandbox(){
   const [ pExperience, setPExperience ] = useState(0)
   const [ pLevelExperience, setPLevelExperience ] = useState(0)
   const [ pLevelExperienceTarget, setPLevelExperienceTarget ] = useState(0)
-
-
   // ---game mechanics
   
   // end config ---
   
-  
   // ---deck
-
   useEffect(() => {
     getDeckInfo()
       .then(deckInfo => setDeckInfo(deckInfo))
@@ -84,44 +80,74 @@ export default function Sandbox(){
     setAreCardsDrawnFromDeckFaceUp(true)
     setFaceUpTrigger(!faceUpTrigger)
   }
-
   // ---deck
 
   // piles---
-
   async function handleGetPileInfo(e) {
     const pileName = e.target.parentNode.id
     const pileInfo = await fetchPileInfo(pileName)
     console.log(`handle get pile info`, pileInfo)
   }
+  // ---piles
 
   async function handleDealCards() {
-    // draw 26 cards
     const pPlatoonDraw = await fetchCardsFromDeck(26)
     const pPlatoonCards = pPlatoonDraw.cards
-    // set pPlatoon
     setPPlatoon(pPlatoonCards)
-    // get list of card codes
     const pPlatoonCardCodes = pPlatoonDraw.cards.map(({code}) => code)
-    console.log(pPlatoonCardCodes)
-    // create remote pile of 26 cards
     const pPlatoonResult = await fetchCreatePile("pPlatoonPile", pPlatoonCardCodes.join(","))
 
-
-    // draw 26 cards
     const ePlatoonDraw = await fetchCardsFromDeck(26)
     const ePlatoonCards = ePlatoonDraw.cards
-    // set ePlatoon
     setEPlatoon(ePlatoonCards)
-    // get list of cards
     const ePlatoonCardCodes = ePlatoonDraw.cards.map(({code}) => code)
-    console.log(ePlatoonCardCodes)
-
-    // create remote pile
     const ePlatoonResult = await fetchCreatePile("ePlatoonPile", ePlatoonCardCodes.join(","))
   }
 
-  // ---piles
+  // battle---
+  function prepPhase() {
+    // player
+      // take card from P
+      // remove card from PPile
+      // put card on B
+      // add card to BPile
+
+    // enemy
+      // take card from P
+      // remove card from PPile
+      // put card on B
+      // add card to BPile
+
+    // later feature
+    // pick a power up
+  }
+
+  function battlePhase() {
+    // player battle card flip
+
+    // enemy battle card flip
+
+    // compare cards
+      // pB > eB
+        // remove cards from eB
+        // remove card from eBPile
+
+        // add cards to pR
+        // add cards to cardList
+
+        // remove cards from pB
+        // remove cards from pBPile
+
+        // add cards to PR
+        // add cards to cardList
+
+        // add cardList to pRPile
+        
+      // pB < eB
+      // pB = eB
+
+  }
+  // ---battle
 
   return (
     <>
