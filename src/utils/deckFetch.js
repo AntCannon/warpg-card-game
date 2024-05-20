@@ -1,4 +1,6 @@
 const BURL = "https://deckofcardsapi.com/api/deck"
+const deckID = "e83u76fodhaz"
+
 // Manage Deck --------------
 
 // get new deck
@@ -11,7 +13,6 @@ export function createShuffledDeck() {
 }
 
 // createShuffled()
-const deckID = "e83u76fodhaz"
 
 //get deck info
 export function getDeckInfo() {
