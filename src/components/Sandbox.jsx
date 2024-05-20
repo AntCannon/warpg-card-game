@@ -45,6 +45,14 @@ export default function Sandbox(){
   const [ eBattle, setEBattle ] = useState([])
   const [ eWar, setEWar ] = useState([])
   // --- local piles
+
+  // game mechanics---
+  const [ pExperience, setPExperience ] = useState(0)
+  const [ pLevelExperience, setPLevelExperience ] = useState(0)
+  const [ pLevelExperienceTarget, setPLevelExperienceTarget ] = useState(0)
+
+
+  // ---game mechanics
   
   // end config ---
   
