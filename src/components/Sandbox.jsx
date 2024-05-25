@@ -129,6 +129,7 @@ export default function Sandbox(){
 
     // later feature
     // pick a power up
+    console.log(`prepPhase cards`, pBattleCards, eBattleCards)
   }
 
   function battlePhase() {

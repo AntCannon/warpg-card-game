@@ -10,6 +10,8 @@ export default function Play({
   handlePrepPhase
 }) {
 
+  console.log(`Play`, pBattle, eBattle)
+  
   return (
     <>
     <h2>Play!</h2>

@@ -31,7 +31,7 @@ export function getCardsFromPile(num = 1, pile) {
 
 // add isFaceUp---
 export function addIsFaceUp(arr) {
-  console.log(arr)
+  console.log(`addIsFaceUp`, arr)
   return arr.map(card => card.isFaceUp = true)
 }
 // ---add isFaceUp
