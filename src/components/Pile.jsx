@@ -12,14 +12,14 @@ export default function CardsDrawnFromDeck({
       <div className={`${player} platoon cards`} id={`${player}PlatoonPile`}>
         <div className={`${player}-platoon soldiers`}>
           {pile?.map(card => {
-            card.isFaceUp = false;
+            // card.isFaceUp = false;
             return <Card
               card={card}
               key={card.code}
             />
           })}
         </div>
-        <button onClick={handleGetPileInfo}>Get Platoon Info</button>
+        {/* <button onClick={handleGetPileInfo}>Get Platoon Info</button> */}
       </div>
     </>
   )

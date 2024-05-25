@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form'
 import {
   shuffleDeck, fetchDeckInfo, fetchCardsFromDeck, fetchCreatePile, fetchPileInfo } from '../utils/deckFetch2.js'
 
-import { getDeckInfo, getDrawnCards } from '../utils/cardFunctions.js'
+import { getDeckInfo, getDrawnCards, getCardsFromPile, addIsFaceUp, turnCardsFaceUp } from '../utils/cardFunctions.js'
 
 import Play from './Play.jsx'
-import CardsDrawnFromDeck from './CardsDrawnFromDeck.jsx'
+// import CardsDrawnFromDeck from './CardsDrawnFromDeck.jsx'
 import Pile from './Pile.jsx'
 import Card from './Card.jsx'
 
@@ -105,17 +105,26 @@ export default function Sandbox(){
   }
 
   // battle---
+  function handlePrepPhase() {
+    prepPhase()
+    battlePhase()
+  }
+
   function prepPhase() {
     // player
       // take card from P
+      const [ pBattleCards, pBattleCodes ] = getCardsFromPile(1, pPlatoon)
       // remove card from PPile
       // put card on B
+      setPBattle(addIsFaceUp(pBattleCards))
       // add card to BPile
 
     // enemy
       // take card from P
+      const [ eBattleCards, eBattleCodes ] = getCardsFromPile(1, ePlatoon)
       // remove card from PPile
       // put card on B
+      setEBattle(addIsFaceUp(eBattleCards))
       // add card to BPile
 
     // later feature
@@ -124,9 +133,9 @@ export default function Sandbox(){
 
   function battlePhase() {
     // player battle card flip
-
+    console.log(pBattle)
     // enemy battle card flip
-
+    console.log(eBattle)
     // compare cards
       // pB > eB
         // remove cards from eB
@@ -153,8 +162,11 @@ export default function Sandbox(){
     <>
       <h2>Sandbox</h2>
       <Play
-        p1Platoon={pPlatoon}
-        p2Platoon={ePlatoon}
+        pPlatoon={pPlatoon}
+        ePlatoon={ePlatoon}
+        pBattle={pBattle}
+        eBattle={eBattle}
+        handlePrepPhase={handlePrepPhase}
       />
       <button onClick={handleShuffleDeck}>Shuffle Deck</button>
       
@@ -170,16 +182,6 @@ export default function Sandbox(){
         <button type="submit">Draw {watchNumCardsToDraw} Card{watchNumCardsToDraw > 1 ? "(s)" : ""} from Deck</button>
       </form>
       
-      <div>
-          <CardsDrawnFromDeck
-            cardsDrawnFromDeck={cardsDrawnFromDeck}
-            areCardsDrawnFromDeckFaceUp={areCardsDrawnFromDeckFaceUp}
-            faceUpTrigger={faceUpTrigger}
-             />
-          <button
-            onClick={handleSetCardsFaceUp}>Flip Cards Up</button>
-        <h3>Cards Remaining in Deck: {cardsDrawnFromDeck?.remaining || deckInfo.remaining}</h3>
-      </div>
       
       <div className="piles">
         <Pile
