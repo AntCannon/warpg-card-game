@@ -6,14 +6,13 @@
 .hero-text {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .main {
-  align-self: middle;
 }
 
 .bottom {
-  justify-self: end;
 }
 
 .hero-img {
