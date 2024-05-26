@@ -30,7 +30,7 @@ https://grid.layoutit.com/?id=a9SKQpI
     ". m . eR . eP . . eD eD ."
     ". m . . . eP . . . . ."
     ". m . . . . . . . . ."
-    ". . . psW psW . eB eB . . ."
+    ". . . eW eW . eB eB . . ."
     ". . . . . . . . . . ."
     ". . . pB pB . pW pW . . ."
     ". . . . . . . . . . ."
@@ -53,7 +53,7 @@ https://grid.layoutit.com/?id=a9SKQpI
 
 .eP { grid-area: eP; }
 
-.psW { grid-area: psW; }
+.eW { grid-area: eW; }
 
 .eB { grid-area: eB; }
 
