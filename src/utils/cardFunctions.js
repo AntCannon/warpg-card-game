@@ -1,48 +1,87 @@
-import { fetchDeckInfo, fetchCardsFromDeck } from './deckFetch2.js'
+import { shuffleDeck, fetchCardsFromDeck } from './deckFetch2.js'
 
-// cardFunctions.js
+// shuffle deck---
 
-// get deck info---
-export async function getDeckInfo() {
-  const actualDeckInfo = await fetchDeckInfo()
-  return actualDeckInfo
+// ---shuffle deck
+
+// deal cards---
+export async function dealCards() {
+  const fetchedCards = await fetchCardsFromDeck(52)
+  addIsFaceUpProp(fetchedCards.cards)
+  const drawnCards = fetchedCards.cards
+  const pCards = drawnCards.splice(0,26)
+  const eCards = drawnCards.splice(0,26)
+  return [pCards, eCards]
 }
-// ---get deck info
+// ---deal cards
 
-// get drawn cards---
-export async function getDrawnCards(num) {
-  const drawnCards = await fetchCardsFromDeck(num)
-  return drawnCards
+// add is face up prop---
+export function addIsFaceUpProp(arr) {
+  return arr.forEach(card => card.isFaceUp = false)
 }
-// ---get drawn cards
+// ---add is face up prop
 
-// add cards to local pile---
-export function addCardsToLocalPile(localPile, cards) {
+// turn card face up---
+export function turnCardsFaceUp(arr) {
+  arr.forEach(card => card.isFaceUp = true)
+  console.log(arr)
 }
-// ---add cards to local pile
+// ---turn card face up
 
-// getCardsFrom---
-export function getCardsFromPile(num = 1, pile) {
-  const removedCards = pile.splice(-num)
-  const removedCardCodes = removedCards.map(({code}) => code)
-  return [removedCards, removedCardCodes]
+// transfer cards---
+export function transferCards(fromPile, toPile, num = 1) {
+  const fromPileCopy = [...fromPile]
+  const cardsToTransfer = fromPileCopy.splice(-num)
+  return [fromPileCopy, cardsToTransfer]
 }
-// ---getCardsFrom
+// ---transfer cards
 
-// add isFaceUp---
-export function addIsFaceUp(arr) {
-  console.log(`addIsFaceUp`, arr)
-  return arr.map(card => card.isFaceUp = true)
+// compare cards---
+
+const valueMap = {
+  "2": 2,
+  "3": 3,
+  "4": 4,
+  "5": 5,
+  "6": 6,
+  "7": 7,
+  "8": 8,
+  "9": 9,
+  "10": 10,
+  "JACK": 11,
+  "KING": 12,
+  "QUEEN": 13,
+  "ACE": 14,
 }
-// ---add isFaceUp
 
-// add turn cards face up---
-export function turnCardsFaceUp(arr, num = 0) {
-  console.log(`pre flip`, arr) 
-  if (!num) num = arr.length
-  for (let i = arr.length - num; i < arr.length; i++) {
-    arr[i].isFaceUp = true
+export function compareBattleCards(pBattlePile, eBattlePile) {
+  const pCard = pBattlePile[pBattlePile.length-1]
+  const eCard = eBattlePile[eBattlePile.length-1]
+  
+  const pCardValue = pCard.value
+  const eCardValue = eCard.value
+
+  const pCardValueNum = valueMap[pCardValue]
+  const eCardValueNum = valueMap[eCardValue]
+
+  let winner = null
+  let loser = null
+  let result = null
+  let cards = null
+  if (pCardValueNum > eCardValueNum) {
+    winner = "p"
+    loser = "e"
+    result = 'Win!'
+    cards = [eCard, pCard]
+  } else if (pCardValueNum < eCardValueNum) {
+    winner = "e"
+    loser = "p"
+    result = "Lose!"
+    cards = [pCard, eCard]
+  } else {
+    result = "War!"
   }
- console.log(`post flip`, arr) 
+
+  return { winner, loser, result, cards }
 }
-// ---add turn cards face up
+ // ---compare cards

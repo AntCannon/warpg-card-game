@@ -1,8 +1,7 @@
 import './App.css'
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Sandbox from './components/Sandbox.jsx'
-import Play from './components/Play.jsx'
+import Field from './components/Field.jsx'
 
 function App() {
 
@@ -13,8 +12,7 @@ function App() {
         <nav>Nav</nav>
       </header>
       <main>
-        Main
-        <Sandbox />
+        <Field />
         {/* <Routes>
         </Routes> */}
       </main>

@@ -1,26 +1,10 @@
-import Card from './Card.jsx'
-import { useState } from 'react'
+const backOfCard = "https://deckofcardsapi.com/static/img/back.png"
 
-export default function CardsDrawnFromDeck({
-  player,
-  pile,
-  handleGetPileInfo
-}) {
-
-  return (
+export default function Pile({pile}) {
+  
+  return(
     <>
-      <div className={`${player} platoon cards`} id={`${player}PlatoonPile`}>
-        <div className={`${player}-platoon soldiers`}>
-          {pile?.map(card => {
-            // card.isFaceUp = false;
-            return <Card
-              card={card}
-              key={card.code}
-            />
-          })}
-        </div>
-        {/* <button onClick={handleGetPileInfo}>Get Platoon Info</button> */}
-      </div>
+      {pile.length ? <img src={pile[pile.length-1]?.isFaceUp ? pile[pile.length-1].image : backOfCard} /> : null}
     </>
   )
 }
