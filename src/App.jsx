@@ -1,16 +1,14 @@
 import './App.css'
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import Header from './components/Header.jsx'
 import Field from './components/Field.jsx'
 
 function App() {
 
   return (
     <>
-      <header>
-        Header
-        <nav>Nav</nav>
-      </header>
+      <Header />
       <main>
         <Field />
         {/* <Routes>
