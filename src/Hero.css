@@ -1,0 +1,22 @@
+.hero {
+  display: flex;
+  justify-content: space-around;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  align-self: middle;
+}
+
+.bottom {
+  justify-self: end;
+}
+.hero-img {
+  width: 300px;
+  aspect-ratio: 16/9;
+  background: gray;
+}
