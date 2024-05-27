@@ -1,6 +1,6 @@
 header {
   height: 50px;
-  background: green;
+  background: rgb(187, 187, 187);
   display: flex;
   padding: 0 20px;
   justify-content: space-between;
