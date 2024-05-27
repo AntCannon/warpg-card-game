@@ -6,6 +6,7 @@ import Hero from './components/Hero.jsx'
 import Hook from './components/Hook.jsx'
 import Mechanics from './components/Mechanics.jsx'
 import HowToPlay from './components/HowToPlay.jsx'
+import Footer from './components/Footer.jsx'
 import Field from './components/Field.jsx'
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
         {/* <Routes>
         </Routes> */}
       </main>
-      <footer>Footer</footer>
+      <Footer />
     </>
   )
 }
