@@ -2,8 +2,9 @@ import './App.css'
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header.jsx'
-import Hero from './Hero.jsx'
-import Hook from './Hook.jsx'
+import Hero from './components/Hero.jsx'
+import Hook from './components/Hook.jsx'
+import Mechanics from './components/Mechanics.jsx'
 import Field from './components/Field.jsx'
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
       <main>
         <Hero />
         <Hook />
-        <Field />
+        <Mechanics />
+        {/* <Field /> */}
         {/* <Routes>
         </Routes> */}
       </main>

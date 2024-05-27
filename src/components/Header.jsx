@@ -1,5 +1,5 @@
 import './Header.css'
-import Nav from './components/Nav.jsx'
+import Nav from './Nav.jsx'
 
 export default function Header() {
   

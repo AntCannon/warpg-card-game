@@ -1,8 +1,9 @@
 * {
-  font-family: "Roboto Slab", serif;
+  font-family: "Roboto Slab";
   font-optical-sizing: auto;
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
 }
-main {
+main * {
+  margin: 10px 0;
 }
