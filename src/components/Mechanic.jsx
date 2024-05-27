@@ -1,5 +1,5 @@
 import './Mechanic.css'
-import MechanicFeature from './components/MechanicFeature.jsx'
+import MechanicFeature from './MechanicFeature.jsx'
 
 export default function Mechanic({mechanic}) {
   const { title, features } = mechanic

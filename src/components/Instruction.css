@@ -1,0 +1,11 @@
+.instruction {
+  display: grid;
+  grid-template-columns: 8fr 2fr;
+  gap: 20px;
+}
+
+.instruction-image {
+  width: 150px;
+  height: 150px;
+  background: gray;
+}

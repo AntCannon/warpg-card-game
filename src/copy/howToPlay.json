@@ -1,0 +1,22 @@
+[
+  {
+    "title" : "Battle",
+    "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in eleifend leo. Aliquam nisl sem, faucibus ac lobortis in, consectetur sagittis dui. Suspendisse mi tellus, maximus vitae finibus et, elementum nec lectus. Nam eget magna sed urna maximus aliquam. Donec elit nulla, luctus in elit ut, elementum varius tortor. In vestibulum, felis et ornare aliquet, urna arcu ornare dui, ut rhoncus justo velit sit amet augue. Aenean dignissim in urna ut tempus.",
+    "image" : ""
+  },
+  {
+    "title" : "Win",
+    "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in eleifend leo. Aliquam nisl sem, faucibus ac lobortis in, consectetur sagittis dui. Suspendisse mi tellus, maximus vitae finibus et, elementum nec lectus. Nam eget magna sed urna maximus aliquam. Donec elit nulla, luctus in elit ut, elementum varius tortor. In vestibulum, felis et ornare aliquet, urna arcu ornare dui, ut rhoncus justo velit sit amet augue. Aenean dignissim in urna ut tempus.",
+    "image" : ""
+  },
+  {
+    "title" : "War",
+    "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in eleifend leo. Aliquam nisl sem, faucibus ac lobortis in, consectetur sagittis dui. Suspendisse mi tellus, maximus vitae finibus et, elementum nec lectus. Nam eget magna sed urna maximus aliquam. Donec elit nulla, luctus in elit ut, elementum varius tortor. In vestibulum, felis et ornare aliquet, urna arcu ornare dui, ut rhoncus justo velit sit amet augue. Aenean dignissim in urna ut tempus.",
+    "image" : ""
+  },
+  {
+    "title" : "Game",
+    "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in eleifend leo. Aliquam nisl sem, faucibus ac lobortis in, consectetur sagittis dui. Suspendisse mi tellus, maximus vitae finibus et, elementum nec lectus. Nam eget magna sed urna maximus aliquam. Donec elit nulla, luctus in elit ut, elementum varius tortor. In vestibulum, felis et ornare aliquet, urna arcu ornare dui, ut rhoncus justo velit sit amet augue. Aenean dignissim in urna ut tempus.",
+    "image" : ""
+  }
+]
