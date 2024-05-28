@@ -1,0 +1,28 @@
+[
+  {
+    "title": "RPG",
+    "features": [
+      {
+        "title": "Exp",
+        "caption": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in eleifend leo."
+      },
+      {
+        "title": "Power Ups",
+        "caption": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in eleifend leo."
+      }
+    ]
+  },
+  {
+    "title": "CASINO",
+    "features": [
+      {
+        "title": "Bet on Yourself",
+        "caption": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in eleifend leo."
+      },
+      {
+        "title": "Win Extra Coins",
+        "caption": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in eleifend leo."
+      }
+    ]
+  }
+]

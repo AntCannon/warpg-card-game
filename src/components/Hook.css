@@ -1,0 +1,8 @@
+.hook {
+  text-align: center;
+}
+
+.images {
+  display: flex;
+  justify-content: space-around;
+}

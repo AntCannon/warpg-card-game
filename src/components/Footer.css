@@ -1,0 +1,7 @@
+footer {
+  height: 50px;
+  background: rgb(187, 187, 187);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
+}
